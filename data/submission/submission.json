@@ -1,0 +1,27 @@
+{
+  "ai_tools": [
+    "OpenAI Responses API with Structured Outputs",
+    "OpenAI-compatible Chat Completions adapter (DeepSeek / JSON-mode gateways)",
+    "Deterministic reference reasoner (no-credential demo and non-LLM baseline)"
+  ],
+  "contact": "CHANGE_ME",
+  "demo_video_duration_seconds": 0,
+  "functional_demo_mode": "source",
+  "hosted_demo_url": "",
+  "live_gate_status": "PENDING",
+  "notes": "Judges can run the full journey from source with no credentials: CASEGRAPH_PAYPAL_TRANSPORT=simulated + scripts/demo_seed.py. Fill repo/video/contact URLs after the live gates and demo recording are complete.",
+  "open_source_license": "MIT",
+  "optional_sponsor_tools": [],
+  "paypal_tools": [
+    "PayPal Sandbox OAuth",
+    "PayPal Disputes API",
+    "PayPal Webhooks",
+    "Simulated PayPal sandbox (clearly labelled, production-forbidden demo transport)"
+  ],
+  "project_name": "CaseGraph \u2014 PayPal Exception CaseGraph",
+  "repo_url": "CHANGE_ME",
+  "tagline": "Turn messy payment disputes into auditable evidence graphs before money moves.",
+  "team": "CHANGE_ME",
+  "user_study_status": "PENDING",
+  "youtube_video_url": "CHANGE_ME"
+}

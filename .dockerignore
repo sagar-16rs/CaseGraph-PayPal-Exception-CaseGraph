@@ -1,0 +1,15 @@
+.git
+.github
+.venv
+venv
+.env
+.data
+__pycache__
+.pytest_cache
+.ruff_cache
+*.pyc
+frontend/node_modules
+frontend/dist
+study_runs
+evaluation_runs
+*.zip

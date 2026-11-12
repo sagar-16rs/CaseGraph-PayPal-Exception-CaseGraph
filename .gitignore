@@ -1,0 +1,41 @@
+# Secrets / local configuration
+.env
+.env.*
+!.env.example
+!.env.production.example
+!frontend/.env.production.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Runtime data
+.data/
+evaluation_runs/
+study_runs/*
+!study_runs/.gitignore
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/*.tsbuildinfo
+
+# Research scratch (baseline copies and throwaway databases)
+research/.tmp/
+research/.baseline/
+research/**/_acl-recovery/
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Release artifacts
+*.zip

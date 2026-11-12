@@ -1,0 +1,39 @@
+{
+  "hackathon": "PayPal AI Hackathon: Build what's next with PayPal and AI",
+  "judging_criteria": [
+    "Technological Implementation",
+    "Design",
+    "Potential Impact",
+    "Innovation/Idea",
+    "Presentation"
+  ],
+  "judging_end_pt": "2026-12-15T08:00:00-08:00",
+  "judging_weights": "equal",
+  "project_requirements": [
+    "Meaningfully use the PayPal developer platform in the free sandbox environment.",
+    "Meaningfully incorporate an AI tool, model, or platform.",
+    "Provide a working, non-trivial implementation."
+  ],
+  "snapshot_date": "2026-10-25",
+  "submission_deadline_ist": "2026-11-13T01:30:00+05:30",
+  "submission_deadline_pt": "2026-11-12T12:00:00-08:00",
+  "submission_requirements": {
+    "demo_video": {
+      "copyright_note": "Do not include third-party trademarks or copyrighted music/material without permission.",
+      "hosting": "Public YouTube",
+      "max_seconds": 180,
+      "must_show_working_project": true,
+      "required": true
+    },
+    "functional_demo": "Hosted demo URL OR complete source setup/run instructions; static/non-functional mockup is insufficient.",
+    "open_source_license": true,
+    "public_repo": true,
+    "text_description": true,
+    "tools_disclosure": true
+  },
+  "urls": {
+    "overview": "https://paypalaihackathon.devpost.com/",
+    "paypal_blog": "https://developer.paypal.com/community/blog/PayPal_AI_Hackathon/",
+    "rules": "https://paypalaihackathon.devpost.com/rules"
+  }
+}

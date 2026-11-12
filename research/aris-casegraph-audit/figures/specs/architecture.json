@@ -1,0 +1,55 @@
+{
+  "title": "CaseGraph control flow: sources to effect, with human authorization",
+  "canvas": { "width": 920, "height": 604 },
+  "style": {
+    "font_family": "'Segoe UI', system-ui, sans-serif",
+    "font_size": 13,
+    "bg_color": "#FFFFFF"
+  },
+  "groups": [
+    { "id": "g1", "label": "1 · Sources", "node_ids": ["paypal_api", "webhooks", "evidence_src"], "fill": "#F7F3EA", "stroke": "#CFC5AE" },
+    { "id": "g2", "label": "2 · State", "node_ids": ["case_state", "evidence_rev", "graph_rev"], "fill": "#EDF1F7", "stroke": "#A9BACC" },
+    { "id": "g3", "label": "3 · Reasoning", "node_ids": ["bundle", "model", "compiler"], "fill": "#F1EDF7", "stroke": "#B6A9CD" },
+    { "id": "g4", "label": "4 · Authorization", "node_ids": ["safety", "approval"], "fill": "#F9F3E6", "stroke": "#DCC79B" },
+    { "id": "g5", "label": "5 · Effect and reconciliation", "node_ids": ["reconcile", "write"], "fill": "#EBF3EE", "stroke": "#AECABC" }
+  ],
+  "nodes": [
+    { "id": "paypal_api", "label": "PayPal Disputes API", "x": 168, "y": 78, "width": 176, "height": 46, "shape": "rounded", "fill": "#FFFFFF", "stroke": "#1F3550" },
+    { "id": "webhooks", "label": "PayPal webhooks", "x": 460, "y": 78, "width": 168, "height": 46, "shape": "rounded", "fill": "#FFFFFF", "stroke": "#1F3550" },
+    { "id": "evidence_src", "label": "Support evidence\nand files", "x": 752, "y": 78, "width": 168, "height": 46, "shape": "rounded", "fill": "#FFFFFF", "stroke": "#7A4A12" },
+
+    { "id": "case_state", "label": "Case state\n+ PayPal facts", "x": 168, "y": 186, "width": 176, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#1F3550" },
+    { "id": "evidence_rev", "label": "Evidence revisions\nsource-cited", "x": 460, "y": 186, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#7A4A12" },
+    { "id": "graph_rev", "label": "CaseGraph revisions\nprovenance-typed", "x": 752, "y": 186, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#4A3A6B" },
+
+    { "id": "bundle", "label": "Frozen analysis\nbundle", "x": 168, "y": 296, "width": 176, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#4A3A6B" },
+    { "id": "model", "label": "Model reasoning\nstructured output", "x": 460, "y": 296, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#4A3A6B" },
+    { "id": "compiler", "label": "Deterministic\ngraph compiler", "x": 752, "y": 296, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#4A3A6B" },
+
+    { "id": "safety", "label": "Deterministic\nsafety policy", "x": 752, "y": 406, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#8A6414" },
+    { "id": "approval", "label": "Human approves\nexact payload", "x": 460, "y": 406, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#8A6414" },
+
+    { "id": "write", "label": "Single PayPal write\nhash-bound", "x": 460, "y": 516, "width": 168, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#2C5C45" },
+    { "id": "reconcile", "label": "Reconciliation\nambiguous = blocked", "x": 168, "y": 516, "width": 176, "height": 50, "shape": "rect", "fill": "#FFFFFF", "stroke": "#2C5C45" }
+  ],
+  "edges": [
+    { "from": "paypal_api", "to": "case_state", "label": "authoritative read", "color": "#1F3550" },
+    { "from": "webhooks", "to": "case_state", "label": "verified event", "color": "#1F3550", "curve": true },
+    { "from": "evidence_src", "to": "evidence_rev", "label": "append-only", "color": "#7A4A12" },
+
+    { "from": "case_state", "to": "bundle", "label": "freeze", "color": "#4A3A6B" },
+    { "from": "evidence_rev", "to": "bundle", "color": "#7A4A12", "curve": true },
+    { "from": "bundle", "to": "model", "color": "#4A3A6B" },
+    { "from": "model", "to": "compiler", "label": "validate", "color": "#4A3A6B" },
+    { "from": "compiler", "to": "graph_rev", "label": "commit revision", "style": "dashed", "color": "#4A3A6B" },
+
+    { "from": "compiler", "to": "safety", "label": "assess", "color": "#8A6414" },
+    { "from": "safety", "to": "approval", "label": "clears one action", "color": "#8A6414" },
+    { "from": "approval", "to": "write", "label": "single attempt", "color": "#2C5C45" },
+    { "from": "write", "to": "reconcile", "label": "record outcome", "color": "#2C5C45" },
+    { "from": "reconcile", "to": "case_state", "label": "authoritative refresh", "style": "dotted", "color": "#A9C6B7", "thickness": 1 }
+  ],
+  "labels": [
+    { "text": "AI interprets · PayPal is authoritative · humans authorize", "x": 460, "y": 588, "font_size": 12, "color": "#7D7D6D", "anchor": "middle" }
+  ]
+}

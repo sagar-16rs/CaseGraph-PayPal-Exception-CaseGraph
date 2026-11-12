@@ -1,0 +1,5 @@
+# Replace CHANGE_ME with a strong secret and keep this file outside source control.
+# Dedicated rate-limiter user: only the key namespace and commands required by
+# backend.security.rate_limit.RedisRateLimiter are granted.
+user default off
+user casegraph on >CHANGE_ME ~casegraph:rl:* +ping +eval +incr +expire

@@ -1,0 +1,23 @@
+FROM python:3.12-slim AS clamav-base
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends clamav clamav-freshclam ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && mkdir -p /var/lib/clamav \
+    && chown -R clamav:clamav /var/lib/clamav
+
+FROM clamav-base AS api
+WORKDIR /app
+RUN groupadd --system casegraph && useradd --system --gid casegraph --home /app casegraph
+COPY requirements.txt requirements-production.txt ./
+RUN pip install --no-cache-dir -r requirements-production.txt
+COPY . .
+RUN mkdir -p /app/.data/evidence_files && chown -R casegraph:casegraph /app/.data
+USER casegraph
+EXPOSE 8000
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "127.0.0.1"]
+
+FROM clamav-base AS freshclam
+# Same Debian/ClamAV packages as the API image, avoiding scanner/database feature drift.
+USER root
+CMD ["freshclam", "-d", "-F", "-c", "24", "--stdout", "--datadir=/var/lib/clamav"]

@@ -1,0 +1,11 @@
+FROM python:3.12-slim AS runtime
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+WORKDIR /app
+RUN groupadd --system casegraph && useradd --system --gid casegraph --home /app casegraph \
+    && apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt requirements-production.txt ./
+RUN pip install --no-cache-dir -r requirements-production.txt
+COPY . .
+USER casegraph
+CMD ["python", "scripts/worker.py"]

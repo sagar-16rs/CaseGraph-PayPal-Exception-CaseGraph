@@ -1,0 +1,62 @@
+{
+  "viewports": [
+    {
+      "viewport": "1440x900",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    },
+    {
+      "viewport": "1280x800",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    },
+    {
+      "viewport": "1024x768",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    },
+    {
+      "viewport": "900x760",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    },
+    {
+      "viewport": "768x720",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    },
+    {
+      "viewport": "390x844",
+      "overflow": 0,
+      "mastheadH": 46,
+      "nodes": 8,
+      "clipped": 0,
+      "inspectorVisible": true,
+      "docketVisible": true
+    }
+  ],
+  "caseSwitchWorked": true,
+  "nodeInspectorOpened": true,
+  "consoleErrors": [],
+  "failedRequests": []
+}

@@ -1,0 +1,61 @@
+{
+  "claims": [
+    {
+      "evidence": "Stages 3-6 regression and provenance model.",
+      "id": "core_provenance",
+      "include_in_submission": true,
+      "status": "LOCAL_VERIFIED",
+      "submission_wording": "CaseGraph separates authoritative PayPal facts, human claims, external evidence, AI inferences, missing evidence, and proposed actions with explicit provenance."
+    },
+    {
+      "evidence": "Structured AI compiler + deterministic safety policy.",
+      "id": "ai_safety",
+      "include_in_submission": true,
+      "status": "LOCAL_VERIFIED",
+      "submission_wording": "AI output is treated as untrusted reasoning: deterministic validation and safety policy run before a recommendation can become actionable."
+    },
+    {
+      "evidence": "Typed approval/execution engine and durable-work hardening.",
+      "id": "human_approval",
+      "include_in_submission": true,
+      "status": "LOCAL_VERIFIED",
+      "submission_wording": "Financially consequential PayPal actions are bound to an immutable human-approved payload and revalidated against fresh PayPal state before execution."
+    },
+    {
+      "evidence": "durable-work layer/9R durable queue and reconciliation tests.",
+      "id": "durable_sync",
+      "include_in_submission": true,
+      "status": "LOCAL_VERIFIED",
+      "submission_wording": "Webhook processing and reconciliation are designed for duplicate delivery, worker recovery, and ambiguous external-write outcomes without blindly retrying non-idempotent financial actions."
+    },
+    {
+      "evidence": "Security and live-integration tests; external environment proof remains separate.",
+      "id": "production_hardening",
+      "include_in_submission": true,
+      "status": "LOCAL_VERIFIED",
+      "submission_wording": "The project includes OIDC/RBAC, request controls, secure evidence-upload boundaries, observability hooks, and production deployment checks."
+    },
+    {
+      "evidence": "Requires integration real PostgreSQL/Redis/OIDC/ClamAV/OTel/npm/PayPal/OpenAI gates.",
+      "id": "live_external_freeze",
+      "include_in_submission": false,
+      "status": "PENDING",
+      "submission_wording": ""
+    },
+    {
+      "evidence": "Requires frozen validation study live-product participant study.",
+      "id": "user_study_benefit",
+      "include_in_submission": false,
+      "status": "PENDING",
+      "submission_wording": ""
+    },
+    {
+      "evidence": "Do not claim production readiness until integration external freeze passes.",
+      "id": "production_ready",
+      "include_in_submission": false,
+      "status": "PENDING",
+      "submission_wording": ""
+    }
+  ],
+  "schema_version": 1
+}

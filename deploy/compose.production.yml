@@ -1,0 +1,92 @@
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.api
+      target: api
+    env_file: ../.env
+    command: ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers", "--forwarded-allow-ips", "${FORWARDED_ALLOW_IPS:-127.0.0.1}"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      clamav-updater: {condition: service_healthy}
+      otel-collector: {condition: service_started}
+    volumes:
+      - evidence_data:/app/.data/evidence_files
+      - clamav_db:/var/lib/clamav:ro
+    read_only: true
+    tmpfs: [/tmp]
+    restart: unless-stopped
+
+  worker:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.worker
+    env_file: ../.env
+    command: ["python", "scripts/worker.py"]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    read_only: true
+    tmpfs: [/tmp]
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:?required}
+      POSTGRES_USER: ${POSTGRES_USER:?required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?required}
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:8-alpine
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?required}
+    command:
+      - sh
+      - -ec
+      - |
+        printf 'user default off\nuser casegraph on >%s ~casegraph:rl:* +ping +eval +incr +expire\n' "$$REDIS_PASSWORD" > /tmp/users.acl
+        exec redis-server --appendonly yes --aclfile /tmp/users.acl
+    volumes: [redis_data:/data]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli --user casegraph -a \"$$REDIS_PASSWORD\" --no-auth-warning ping | grep -q PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  clamav-updater:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile.api
+      target: freshclam
+    volumes: [clamav_db:/var/lib/clamav]
+    healthcheck:
+      test: ["CMD-SHELL", "test -s /var/lib/clamav/daily.cld || test -s /var/lib/clamav/daily.cvd"]
+      interval: 30s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  otel-collector:
+    # Pin this in your deployment environment; integration deliberately refuses
+    # to invent a moving collector version in source control.
+    image: ${OTEL_COLLECTOR_IMAGE:?set a pinned otel/opentelemetry-collector image}
+    command: ["--config=/etc/otelcol/config.yml"]
+    volumes:
+      - ./otel-collector.yml:/etc/otelcol/config.yml:ro
+    restart: unless-stopped
+
+volumes:
+  evidence_data:
+  postgres_data:
+  redis_data:
+  clamav_db:
